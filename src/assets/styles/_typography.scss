@@ -1,0 +1,23 @@
+// font(alias, name, weight, style)
+@include font('RobotoCondensed', 'RobotoCondensed-Bold', 700, normal);
+@include font('RobotoCondensed', 'RobotoCondensed-Regular', 400, normal);
+
+@mixin text72 {
+    font-size: 4.5rem;
+    line-height: 1.2;
+}
+
+@mixin text18 {
+    font-size: 1.125rem;
+    line-height: 1.5;
+}
+
+@mixin text32 {
+    font-size: 2rem;
+    line-height: 1.5;
+}
+
+@mixin text16 {
+    font-size: 1rem;
+    line-height: 1;
+}

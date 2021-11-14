@@ -1,0 +1,44 @@
+//======== primary styles =========
+html,
+:root {
+    font-size: 16px;
+}
+
+body {
+    font-family: $fontFamily;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.18;
+    color: #000;
+    background: #F5F5F5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+footer {
+    flex-shrink: 0;
+}
+//======== wrapper =========
+.wrapper,
+#app {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+    flex-direction: column;
+}
+//======== main block =========
+.page {
+    flex: 1 0 auto;
+}
+//======== base grid =========
+.container {
+    width: 100%;
+    max-width: 1920px;
+    padding: 0 17.06rem;
+    margin: 0 auto;
+
+    @media (max-width: 1919px){
+        padding: 0 2rem;
+    }
+}
