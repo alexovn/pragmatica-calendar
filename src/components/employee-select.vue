@@ -17,28 +17,30 @@
       </div>
       <span class="v-select-selected-icon"></span>
     </div>
-    <div
-      class="v-select-options"
-      v-show="optionsOpened == true"
-    >
+    <transition name="fade">
       <div
-        class="v-select-option"
-        v-for="user in users"
-        :key="user.id"
-        @click="selectOption(user)"
+        class="v-select-options"
+        v-show="optionsOpened == true"
       >
-        <div class="v-select-option-placeholder">
-          <img
-            class="v-select-option-img"
-            :src="user.img"
-            alt="image"
-          >
-        </div>
-        <div class="v-select-option-name">
-          {{ user.name }}
+        <div
+          class="v-select-option"
+          v-for="user in users"
+          :key="user.id"
+          @click="selectOption(user)"
+        >
+          <div class="v-select-option-placeholder">
+            <img
+              class="v-select-option-img"
+              :src="user.img"
+              alt="image"
+            >
+          </div>
+          <div class="v-select-option-name">
+            {{ user.name }}
+          </div>
         </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -62,11 +64,14 @@ export default {
     },
     selectOption (user) {
       this.selected = user
+      this.$root.selectedUser = user.id
       this.optionsOpened = false
     }
   },
   mounted () {
     this.selected = this.users[0]
+    // console.log(this.selected.id)
+    this.$root.selectedUser = this.users[0].id
   }
 }
 </script>
@@ -77,8 +82,8 @@ export default {
 }
 
 .v-select {
+  position: relative;
   &-selected {
-    // padding: 0.5rem 1.06rem;
     padding: 0.5rem 3.6rem 0.5rem 1.06rem;
     position: relative;
     min-height: 2.94rem;
@@ -136,6 +141,8 @@ export default {
   }
 
   &-options {
+    position: absolute;
+    width: 100%;
     padding: 1rem 0;
     border: 1px solid var(--gray-border);
     border-bottom-left-radius: 0.44rem;

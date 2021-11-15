@@ -28,11 +28,15 @@
                     <div class="employee-select__title">
                       Сотрудник
                     </div>
-                    <employee-select :users="users"></employee-select>
+                    <employee-select :users="users">
+                    </employee-select>
                   </div>
                 </div>
                 <div class="employees-info-item">
-                  <employee-events></employee-events>
+                  <employee-events
+                    :userId="selectedUser"
+                    :users="users"
+                  ></employee-events>
                 </div>
               </div>
             </div>
@@ -59,6 +63,7 @@ export default {
     return {
       users: [
         {
+          id: '1',
           img: require('@/assets/img/user-pics/image-1.jpg'),
           name: 'Алексей Лечащий',
           eventList: [
@@ -85,22 +90,95 @@ export default {
           ]
         },
         {
+          id: '2',
           img: require('@/assets/img/user-pics/image-1.jpg'),
-          name: 'Дима Муха'
+          name: 'Дима Муха',
+          eventList: [
+            {
+              city: 'Екатеринбург',
+              cityColor: '#0071B2',
+              dates: ['2021-06-01', '2021-06-02']
+            },
+            {
+              city: 'Санкт-Петербург',
+              cityColor: '#AF032C',
+              dates: ['2021-06-04', '2021-06-07']
+            },
+            {
+              city: 'Сочи',
+              cityColor: '#DE911D',
+              dates: ['2021-06-28', '2021-06-29', '2021-06-30']
+            }
+          ]
         },
         {
+          id: '3',
           img: require('@/assets/img/user-pics/image-1.jpg'),
-          name: 'Саша Кощей'
+          name: 'Саша Кощей',
+          eventList: [
+            {
+              city: 'Екатеринбург',
+              cityColor: '#0071B2',
+              dates: ['2021-06-01', '2021-06-02']
+            },
+            {
+              city: 'Москва',
+              cityColor: '#59A646',
+              dates: ['2021-06-04', '2021-06-07']
+            }
+          ]
         },
         {
+          id: '4',
           img: require('@/assets/img/user-pics/image-1.jpg'),
-          name: 'Петя Стреляный'
+          name: 'Петя Стреляный',
+          eventList: [
+            {
+              city: 'Москва',
+              cityColor: '#59A646',
+              dates: ['2021-06-04', '2021-06-07']
+            },
+            {
+              city: 'Санкт-Петербург',
+              cityColor: '#AF032C',
+              dates: ['2021-06-04', '2021-06-07']
+            },
+            {
+              city: 'Сочи',
+              cityColor: '#DE911D',
+              dates: ['2021-06-28', '2021-06-29', '2021-06-30']
+            }
+          ]
         },
         {
+          id: '5',
           img: require('@/assets/img/user-pics/image-1.jpg'),
-          name: 'Маша Лишняя'
+          name: 'Маша Лишняя',
+          eventList: [
+            {
+              city: 'Екатеринбург',
+              cityColor: '#0071B2',
+              dates: ['2021-06-01', '2021-06-02']
+            },
+            {
+              city: 'Москва',
+              cityColor: '#59A646',
+              dates: ['2021-06-04', '2021-06-07']
+            },
+            {
+              city: 'Санкт-Петербург',
+              cityColor: '#AF032C',
+              dates: ['2021-06-04', '2021-06-07']
+            },
+            {
+              city: 'Сочи',
+              cityColor: '#DE911D',
+              dates: ['2021-06-28', '2021-06-29', '2021-06-30']
+            }
+          ]
         }
-      ]
+      ],
+      selectedUser: ''
     }
   }
 }

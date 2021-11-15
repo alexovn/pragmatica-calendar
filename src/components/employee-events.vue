@@ -2,7 +2,7 @@
   <div class="employee-events">
     <div class="employee-events__item">
       <div class="employee-events__item-num">
-        4
+        {{ eventsLength }}
       </div>
       <div class="employee-events__item-text">
         поездки
@@ -10,7 +10,7 @@
     </div>
     <div class="employee-events__item">
       <div class="employee-events__item-num">
-        9
+        {{ eventsCounter }}
       </div>
       <div class="employee-events__item-text">
         дней коммандировки
@@ -22,17 +22,27 @@
 <script>
 export default {
   props: {
-    users: {
-      type: Array,
+    userId: {
+      type: String,
       required: true
     },
-    events: {
+    users: {
       type: Array,
       required: true
     }
   },
-  data () {
-    return {}
+  computed: {
+    eventsLength () {
+      if (!this.$root.selectedUser) return
+      return this.users.find(user => user.id === this.userId).eventList.length
+    },
+    eventsCounter () {
+      if (!this.$root.selectedUser) return
+      return this.users
+        .find(user => user.id === this.userId)
+        .eventList.map(item => item.dates)
+        .flat(Infinity).length
+    }
   }
 }
 </script>
