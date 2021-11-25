@@ -21,7 +21,10 @@
         <div class="calendar-block">
           <div class="container">
             <div class="calendar-block__content">
-              <calendar></calendar>
+              <calendar
+                :users="users"
+                :userId="selectedUser"
+              ></calendar>
               <div class="employees-info">
                 <div class="employees-info-item">
                   <div class="employee-select">

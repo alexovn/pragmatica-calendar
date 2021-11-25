@@ -62,9 +62,6 @@ export default {
     &-num {
       font-size: 2rem;
     }
-
-    &-text {
-    }
   }
 }
 </style>

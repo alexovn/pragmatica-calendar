@@ -1,13 +1,28 @@
 <template>
   <div class="calendar">
     <div class="calendar-wrapper">
+      {{ dataAttributes }}
       <v-calendar
         class="calendar-component"
         :masks="masks"
+        :attributes="dataAttributes"
         :from-page="{ month: 6, year: 2021 }"
         is-expanded
         title-position="left"
       >
+        <template v-slot:day-content="{ day, dataAttributes }">
+          <div>
+            <span>{{ day.day }}</span>
+            <div>
+              <p
+                v-for="attr in dataAttributes"
+                :key="attr.key"
+              >
+                {{ attr.dates }}
+              </p>
+            </div>
+          </div>
+        </template>
       </v-calendar>
     </div>
   </div>
@@ -15,13 +30,47 @@
 
 <script>
 export default {
+  props: {
+    users: {
+      type: Array,
+      required: true
+    },
+    userId: {
+      type: String,
+      required: true
+    }
+  },
   data () {
-    // const month = new Date().getMonth()
-    // const year = new Date().getFullYear()
     return {
       masks: {
         weekdays: 'WWWW'
-      }
+      },
+      attributes: [
+        {
+          customData: {
+            city: 'Екатеринбург'
+          },
+          dates: ['2021-06-01']
+        }
+      ]
+    }
+  },
+  computed: {
+    dataAttributes () {
+      if (!this.userId) return
+      return (
+        this.users
+          .find(user => user.id === this.userId)
+          // .reduce((acc, user) => {
+          //   acc.push({
+          //     key: user.id,
+          //     dates: user.eventList.dates
+          //   })
+          //   return acc
+          // })
+          .eventList.map(event => event.dates)
+          .flat(Infinity)
+      )
     }
   }
 }
