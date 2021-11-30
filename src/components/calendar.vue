@@ -4,7 +4,7 @@
       <v-calendar
         class="calendar-component"
         :masks="masks"
-        :attributes="dataAttributes"
+        :attributes="dataArray"
         :from-page="{ month: 6, year: 2021 }"
         is-expanded
         title-position="left"
@@ -19,7 +19,7 @@
                 :style="{backgroundColor: attr.customData.color}"
                 class="bubble"
               >
-                {{ attr.customData.city }}
+                {{ attr.customData.name }}
               </p>
             </div>
           </div>
@@ -46,20 +46,24 @@ export default {
       masks: {
         weekdays: 'WWWW'
       },
-      attributes: [
+      dataWeekends: [
         {
           customData: {
-            city: 'Екатеринбург',
-            color: '#0071B2'
+            name: 'Выходной',
+            color: '#97B2C4'
           },
-          dates: ['2021-06-01', '2021-06-02']
-        },
+          dates: {
+            weekdays: [1, 7]
+          }
+        }
+      ],
+      dataHolidays: [
         {
           customData: {
-            city: 'Казань',
-            color: '#AF032C'
+            name: 'Праздник',
+            color: '#97B2C4'
           },
-          dates: ['2021-06-25', '2021-06-22']
+          dates: ['2021-06-15', '2021-06-11', '2021-06-12']
         }
       ]
     }
@@ -71,19 +75,24 @@ export default {
         .find(user => user.id === this.userId)
         .eventList.map(item => ({
           customData: {
-            city: item.city,
+            name: item.city,
             color: item.cityColor
           },
           dates: item.dates
         }))
+    },
+    dataArray () {
+      return [
+        ...this.dataAttributes,
+        ...this.dataWeekends,
+        ...this.dataHolidays
+      ]
     }
   }
 }
 </script>
 
 <style lang="scss">
-// @import "../assets/styles/typography.scss";
-
 .bubble {
   padding: 0.3rem 0.4rem;
   min-height: 1.24rem;
@@ -167,7 +176,6 @@ export default {
     padding: 0.44rem 0.44rem 0.56rem;
     display: flex;
     justify-content: flex-end;
-    // align-items: flex-start;
 
     min-height: var(--day-height);
 
@@ -183,6 +191,10 @@ export default {
   & .vc-day.is-not-in-month * {
     opacity: 1;
     color: #c0c3cc;
+
+    .bubble {
+      color: #fff;
+    }
   }
 
   .vc-day-content {
