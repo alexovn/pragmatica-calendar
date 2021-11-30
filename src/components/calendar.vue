@@ -1,7 +1,6 @@
 <template>
   <div class="calendar">
     <div class="calendar-wrapper">
-      {{dataNotWorkingDays}}
       <v-calendar
         class="calendar-component"
         :masks="masks"
