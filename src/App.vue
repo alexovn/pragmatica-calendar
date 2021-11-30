@@ -181,7 +181,7 @@ export default {
           ]
         }
       ],
-      selectedUser: ''
+      selectedUser: '1'
     }
   }
 }

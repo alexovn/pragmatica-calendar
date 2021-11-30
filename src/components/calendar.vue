@@ -1,7 +1,6 @@
 <template>
   <div class="calendar">
     <div class="calendar-wrapper">
-      {{ dataAttributes }}
       <v-calendar
         class="calendar-component"
         :masks="masks"
@@ -10,15 +9,16 @@
         is-expanded
         title-position="left"
       >
-        <template v-slot:day-content="{ day, dataAttributes }">
+        <template v-slot:day-content="{ day, attributes }">
           <div>
             <span>{{ day.day }}</span>
             <div>
               <p
-                v-for="attr in dataAttributes"
+                v-for="attr in attributes"
                 :key="attr.key"
               >
-                {{ attr.dates }}
+                {{ attr.customData.city }}
+                {{ attr.customData.color }}
               </p>
             </div>
           </div>
@@ -48,9 +48,17 @@ export default {
       attributes: [
         {
           customData: {
-            city: 'Екатеринбург'
+            city: 'Екатеринбург',
+            color: '#0071B2'
           },
-          dates: ['2021-06-01']
+          dates: ['2021-06-01', '2021-06-02']
+        },
+        {
+          customData: {
+            city: 'Казань',
+            color: '#AF032C'
+          },
+          dates: ['2021-06-25', '2021-06-22']
         }
       ]
     }
@@ -58,19 +66,15 @@ export default {
   computed: {
     dataAttributes () {
       if (!this.userId) return
-      return (
-        this.users
-          .find(user => user.id === this.userId)
-          // .reduce((acc, user) => {
-          //   acc.push({
-          //     key: user.id,
-          //     dates: user.eventList.dates
-          //   })
-          //   return acc
-          // })
-          .eventList.map(event => event.dates)
-          .flat(Infinity)
-      )
+      return this.users
+        .find(user => user.id === this.userId)
+        .eventList.map(item => ({
+          customData: {
+            city: item.city,
+            color: item.cityColor
+          },
+          dates: item.dates
+        }))
     }
   }
 }
