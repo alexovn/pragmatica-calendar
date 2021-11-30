@@ -10,15 +10,16 @@
         title-position="left"
       >
         <template v-slot:day-content="{ day, attributes }">
-          <div>
+          <div class="day-box">
             <span>{{ day.day }}</span>
             <div>
               <p
                 v-for="attr in attributes"
                 :key="attr.key"
+                :style="{backgroundColor: attr.customData.color}"
+                class="bubble"
               >
                 {{ attr.customData.city }}
-                {{ attr.customData.color }}
               </p>
             </div>
           </div>
@@ -82,6 +83,23 @@ export default {
 
 <style lang="scss">
 // @import "../assets/styles/typography.scss";
+
+.bubble {
+  padding: 0.3rem 0.4rem;
+  min-height: 1.24rem;
+  font-size: 0.75rem;
+  text-align: center;
+  color: #fff;
+  border-radius: 4px;
+}
+
+.day-box {
+  display: flex;
+  flex-direction: column;
+  span {
+    height: 100%;
+  }
+}
 
 .calendar-wrapper {
   padding: 1.1875rem 1.625rem 4.1875rem;
@@ -147,11 +165,10 @@ export default {
 
   & .vc-day {
     padding: 0.44rem 0.44rem 0.56rem;
-
+    display: flex;
     justify-content: flex-end;
-    align-items: flex-start;
+    // align-items: flex-start;
 
-    // min-width: var(--day-width);
     min-height: var(--day-height);
 
     text-align: right;
