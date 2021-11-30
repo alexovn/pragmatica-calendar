@@ -1,9 +1,11 @@
 <template>
   <div class="calendar">
     <div class="calendar-wrapper">
+      {{dataNotWorkingDays}}
       <v-calendar
         class="calendar-component"
         :masks="masks"
+        ref="calendar"
         :attributes="dataArray"
         :from-page="{ month: 6, year: 2021 }"
         is-expanded
@@ -19,7 +21,7 @@
                 :style="{backgroundColor: attr.customData.color}"
                 class="bubble"
               >
-                {{ attr.customData.name }}
+                {{ isHoliday(day.id) ? dataHolidays[0].customData.label : attr.customData.label }}
               </p>
             </div>
           </div>
@@ -49,7 +51,7 @@ export default {
       dataWeekends: [
         {
           customData: {
-            name: 'Выходной',
+            label: 'Выходной',
             color: '#97B2C4'
           },
           dates: {
@@ -60,12 +62,20 @@ export default {
       dataHolidays: [
         {
           customData: {
-            name: 'Праздник',
+            label: 'Праздник',
             color: '#97B2C4'
           },
           dates: ['2021-06-15', '2021-06-11', '2021-06-12']
         }
       ]
+    }
+  },
+  methods: {
+    isHoliday (isoDate) {
+      return this.dataHolidays[0].dates.includes(isoDate)
+    },
+    isWeekday (day) {
+      return new Date(Date.parse(day)).getDay()
     }
   },
   computed: {
@@ -75,18 +85,29 @@ export default {
         .find(user => user.id === this.userId)
         .eventList.map(item => ({
           customData: {
-            name: item.city,
+            label: item.city,
             color: item.cityColor
           },
           dates: item.dates
         }))
     },
     dataArray () {
-      return [
-        ...this.dataAttributes,
-        ...this.dataWeekends,
-        ...this.dataHolidays
+      return [...this.dataAttributes, ...this.dataNotWorkingDays]
+    },
+    clearHolidays () {
+      const clearDates = this.dataHolidays[0].dates.filter(date => {
+        return this.isWeekday(date) !== 6 && this.isWeekday(date) !== 0
+      })
+      return clearDates
+    },
+    dataNotWorkingDays () {
+      const newHolidays = [
+        {
+          customData: this.dataHolidays[0].customData,
+          dates: this.clearHolidays
+        }
       ]
+      return [...this.dataWeekends, ...newHolidays]
     }
   }
 }
